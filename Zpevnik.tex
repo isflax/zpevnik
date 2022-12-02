@@ -1,0 +1,102 @@
+\documentclass[11pt,a4paper]{extarticle}
+\usepackage{ifpdf}
+\usepackage[chorded]{songs}
+\usepackage{musixtex,graphicx}
+%\usepackage{etex}
+
+%Kvůli musixtexu je třeba kompilovat LaTeXem namísto pdfLaTeXu
+ %(dokument funguje stejně, ale čísla v tablaturách jsou zčerněná)
+
+\title{\Huge \bfseries Zpěvník}
+\author{\Large\bfseries Jelen}
+
+
+\usepackage[swedish, english, czech]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+
+%Rozměry
+\setlength{\oddsidemargin}{0in}
+\setlength{\evensidemargin}{0in}
+\setlength{\textwidth}{6.5in}
+\setlength{\topmargin}{-0.5in}
+\setlength{\topskip}{0in} 
+\setlength{\headheight}{0in}
+\setlength{\headsep}{0in}
+\setlength{\textheight}{10in}
+\settowidth{\versenumwidth}{1.\ }
+
+
+%Různé příkazy ze songs package
+\noversenumbers %sloky nemají číslo
+\nosongnumbers %skladby nemají číslo
+\MultiwordChords %akord se neváže ke slovu
+\renewcommand{\printchord}[1]{\bfseries\sffamily#1} %přeformátování akordu
+\renewcommand{\stitlefont}{\bfseries\rmfamily\Large} %přeformátování názvu skladby
+
+
+\usepackage{etoolbox}
+\patchcmd{\showauthors}{\bfseries}{\bfseries\normalsize}{}{} %přeformátování autora
+\patchcmd{\showrefs}{\slshape}{\small}{}{} %přeformátování alba
+\patchcmd{\capo}{\else}{\else\vspace{-1.5em}\small}{}{} %přeformátování capo
+
+
+%Definování opakovanýho refrénu (\rechorus[počet_opakování])
+\usepackage{ifthen} 
+\newcommand{\rechorus}[1][]{
+\beginchorus \chordsoff
+{\hspace{24pt}\bfseries\chordsoff R:} \ifthenelse{\equal{#1}{}}{}{ \rep{#1}}
+\endchorus}
+
+
+
+%Obsah
+
+\usepackage[unicode,hidelinks]{hyperref}
+
+
+\usepackage{xargs} %dovoluje zapsat kterýkoliv argument jako dobrovolný (viz níže newcommandx [(číslo argumentu)=(default/None)])
+\newcommandx\nazev[2][2=]{
+  \beginsong{#1}[#2]
+  \vspace{-7em}
+    \hypersetup{bookmarksdepth=0}
+  \phantomsection
+  \addcontentsline{toc}{subsection}{\large #1} %\numberline{\thesongnum} (před #1 – číslování)
+  \hypersetup{bookmarksdepth=2}
+  \vspace{7em}
+  }
+  \addto\captionsczech{\renewcommand*\contentsname{\huge\bfseries Obsah}}
+
+%% 
+
+\begin{document} 
+\maketitle
+\tableofcontents
+\clearpage
+\begin{songs}{}
+
+\input{youlookedintomyeyes}
+\input{proklatafordka}
+\input{trikrize}
+\input{bednavodwhisky}
+\input{adesolationsong}
+\input{kneeltothecross}
+\input{intheshadow}
+\input{allspectacular}
+\input{snuff}
+\input{krtekjoy}
+\input{dabelasyn}
+\input{andel}
+\input{galgasang}
+\input{forsvinndusomlyser}
+\input{svartdjup}
+\input{densistarunansdans}
+\input{pennydreadful}
+\input{lastdayonearth}
+\input{starejbar}
+\input{sweetdreams}
+\input{los}
+
+\end{songs}
+\end{document}
